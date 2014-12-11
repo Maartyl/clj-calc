@@ -110,7 +110,7 @@
           [([(ic :guard symbol?)   & ir]:seq) _ ]  (shunting-yard ir (cons ic stack))               ;; add fun to stack
 
           [([:cm & _ ]:seq)   ([] :seq)         ]  (throwex "comma outside function call")
-          [([:cm & ir]:seq)   ([:lpar & sr]:seq)]  (shunting-yard ir stack)                         ;; 'start' of fn: end popping operators
+          [([:cm & ir]:seq)   ([:lpar & sr]:seq)]  (shunting-yard ir stack)                         ;; 'start' of fn: end popping operators (keep lpar)
           [([:cm & _ ]:seq)   ([sc & sr]:seq)   ]  (cons sc (lazy-seq (shunting-yard input sr)))    ;; pop all ops before :lpar
 
           [([(ic :guard operator?) & ir]:seq) ([]:seq)]          (shunting-yard ir [ic])            ;; add operator to empty stack
